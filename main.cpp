@@ -14,17 +14,19 @@ int main()
     SetConsoleCP(CP_UTF8);
 #endif
 
-    auto documents = ReadDocumentFile("document.txt");
-    auto kitsMap = ReadKitsFile("kit.txt");
+    // Читаем файлы документа и наборов
+    auto document = ReadDocumentFile("document.txt");
+    auto kits = ReadKitsFile("kit.txt");
 
-    if (documents.empty() || kitsMap.empty()) {
+    if (document.empty() || kits.empty()) {
         return 1;
     }
 
+    // Проверяем наличие набора в документе
     Result result;
+    bool isContained = CheckKitInDocuments(document, kits, result);
 
-    bool isContained = CheckKitInDocuments(documents, kitsMap, result);
-
+    // Печать результата
     PrintResult(isContained, result);
 
     return 0;

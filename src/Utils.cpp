@@ -18,7 +18,7 @@ namespace Utils
                 std::stringstream catalogSS(catalogStr);
                 std::string catalog;
                 while (std::getline(catalogSS, catalog, ',')) {
-                    TrimStr(catalog);  // Удаляем пробелы и кавычки
+                    TrimStr(catalog);
                     if (!catalog.empty()) {
                         row._catalogs.emplace_back(catalog);
                     }
@@ -38,7 +38,7 @@ namespace Utils
             int count;
 
             ss >> catalogStr >> count;
-            TrimStr(catalogStr);   // Удаляем пробелы и кавычки
+            TrimStr(catalogStr);
 
             if (!catalogStr.empty()) {
                 kits.emplace(catalogStr, count);
@@ -93,13 +93,13 @@ namespace Utils
 
     void PrintResult(bool success, const Result& result) {
     if (success) {
-        std::cout << "Набор содержится в документе\n";
-        std::cout << "Состав набора\n";
-        std::cout << "Позиция\tКол-во\tКаталог\n";
+        std::cout << "Набор содержится в документе\n"
+                << "Состав набора\n"
+                << "Позиция\tКол-во\tКаталог\n";
 
-        for (const auto& g_item : result) {
-            for (const auto& i_item : g_item.second) {
-                std::cout << g_item.first << "\t" << i_item.second << "\t\"" << i_item.first << "\"\n";
+        for (const auto& resItem : result) {
+            for (const auto& internalVecItem : resItem.second) {
+                std::cout << resItem.first << "\t" << internalVecItem.second << "\t\"" << internalVecItem.first << "\"\n";
             }
         }
     }
@@ -115,7 +115,6 @@ namespace Utils
 
 #ifdef __linux__
     void CleanStr(std::string& str) {
-        // Удаляем \r на linux
         str.erase(std::remove(str.begin(), str.end(), '\r'), str.end());
     }
 #endif

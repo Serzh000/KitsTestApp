@@ -22,9 +22,11 @@ namespace Utils
     using Result = std::map<int, std::vector<std::pair<std::string, int>>>;
 
 #ifdef __linux__
+    // Удаляем сивол \r конца строки на linux в текстовых файлах
     void CleanStr(std::string& str);
 #endif
 
+    // Шаблонный метод для чтения файлов
     template <typename Func>
     void ReadFileLines(const std::string& filename, Func handleLine) {
         std::ifstream file(filename);
@@ -48,10 +50,18 @@ namespace Utils
         }
     }
 
+    // Чтение файла документа
     Document ReadDocumentFile(const std::string& filename);
+
+    // Чтение файла набора
     Kits ReadKitsFile(const std::string& filename);
+
+    // Проверка наличия набора в документе
     bool CheckKitInDocuments(const Document& document, const Kits& kit, Result& result);
+
+    // Печать результата
     void PrintResult(bool success, const Result& result);
 
+    // Обрезка строки от лишних символов
     void TrimStr(std::string& str);
 }
